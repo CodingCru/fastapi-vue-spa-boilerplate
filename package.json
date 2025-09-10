@@ -1,0 +1,30 @@
+{
+  "name": "fastapi-vue-spa-boilerplate",
+  "version": "1.0.0",
+  "description": "A minimal FastAPI + Vue 3 SPA boilerplate for rapid application development",
+  "scripts": {
+    "dev": "docker compose up --build",
+    "dev:frontend": "cd frontend && npm run dev",
+    "dev:backend": "cd backend && python -m uvicorn app.main:app --reload --host 0.0.0.0 --port 8000",
+    "install": "cd frontend && npm install",
+    "install:backend": "cd backend && pip install -r requirements.txt",
+    "build": "cd frontend && npm run build",
+    "setup": "npm run install && npm run install:backend",
+    "start": "npm run dev"
+  },
+  "keywords": [
+    "fastapi",
+    "vue",
+    "spa",
+    "boilerplate",
+    "python",
+    "javascript",
+    "fullstack"
+  ],
+  "author": "",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CodingCru/fastapi-vue-spa-boilerplate.git"
+  }
+}
