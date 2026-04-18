@@ -15,7 +15,7 @@ onMounted(async () => {
 
 <template>
   <main style="padding:2rem;font-family:sans-serif">
-    <h1>Django + Vue</h1>
+    <h1>FastAPI + Vue</h1>
     <p>Health: {{ msg }}</p>
   </main>
 </template>
