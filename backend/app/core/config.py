@@ -1,5 +1,6 @@
-from typing import List
+
 from decouple import config
+
 
 class Settings:
     # Basic settings
@@ -19,7 +20,7 @@ class Settings:
     DATABASE_URL: str = config("DATABASE_URL", default="postgresql://user:password@localhost/dbname")
     
     # CORS
-    BACKEND_CORS_ORIGINS: List[str] = config(
+    BACKEND_CORS_ORIGINS: list[str] = config(
         "BACKEND_CORS_ORIGINS",
         default="http://localhost:3000,http://localhost:5173",
         cast=lambda v: [i.strip() for i in v.split(",")]
