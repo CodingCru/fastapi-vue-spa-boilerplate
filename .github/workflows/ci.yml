@@ -55,3 +55,26 @@ jobs:
         steps:
             - name: Download code
               uses: actions/checkout@v4
+            
+
+            - name: setup pnpm
+              uses: pnpm/action-setup@v4
+              with:
+                version: 9
+        
+            - name: Set up Node
+              uses: actions/setup-node@v4
+              with:
+                node-version: "24"
+                cache: pnpm
+                cache-dependency-path: frontend/pnpm-lock.yaml
+            
+            - name: Install dependencies
+              run: pnpm install --frozen-lockfile
+              
+            #setup to check for typscript using the compiler thats already installed and does a check only uising the existing config.
+            - name: typescript check
+              run: pnpm exec tsc --noEmit -p tsconfig.json
+              continue-on-error: true
+            
+
