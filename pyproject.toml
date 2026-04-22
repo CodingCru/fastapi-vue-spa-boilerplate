@@ -18,7 +18,6 @@ combine-as-imports = true
 
 [tool.mypy]
 python_version = "3.12"
-plugins = ["mypy_django_plugin.main"]
 explicit_package_bases = true
 files = ["backend"]
 ignore_missing_imports = true
@@ -29,5 +28,4 @@ warn_unused_ignores = true
 warn_redundant_casts = true
 
 
-[tool.django-stubs]
-django_settings_module = "backend.config.settings.dev"
+
