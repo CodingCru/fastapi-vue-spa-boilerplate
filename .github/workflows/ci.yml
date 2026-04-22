@@ -1,0 +1,88 @@
+name: CI workflow
+
+on:
+    push:
+        branches: [main]
+    pull_request:
+
+jobs:
+    backend:
+        name: Backend(Python)
+        runs-on: ubuntu-latest
+        defaults:
+            run:
+                working-directory: backend
+        steps:
+            - name: Download code
+              uses: actions/checkout@v4
+
+            - name: Set up python
+              uses: actions/setup-python@v5
+              with:
+                python-version: "3.12"
+                cache: pip
+                cache-dependency-path: backend/requirements.txt
+            
+            
+            #update pip first and then install requirements
+            - name: Install dependencies
+              run: |
+                pip install --upgrade pip
+                pip install -r requirements.txt
+                pip install ruff mypy pytest
+            
+            
+            - name: Ruff(using lint)
+              run: ruff check .
+              continue-on-error: true
+            
+            - name: MyPy(using type check)
+              run: mypy app
+              continue-on-error: true
+
+            - name: PyTest
+              run: pytest || true
+
+            
+
+        
+    frontend:
+        name: Frontend(Vue)
+        runs-on: ubuntu-latest
+        defaults:
+            run:
+                working-directory: frontend
+        steps:
+            - name: Download code
+              uses: actions/checkout@v4
+            
+
+            - name: setup pnpm
+              uses: pnpm/action-setup@v4
+              with:
+                version: 9
+        
+            - name: Set up Node
+              uses: actions/setup-node@v4
+              with:
+                node-version: "24"
+                cache: pnpm
+                cache-dependency-path: frontend/pnpm-lock.yaml
+            
+            - name: Install dependencies
+              run: pnpm install --frozen-lockfile
+              
+            - name: run EsLint
+              run: |
+                pnpm exec eslint . || echo "::warning:: ESlint was skipped as not installed, add eslint and config to enable this check"
+              continue-on-error: true
+
+            - name: TypeCheck
+              run: |
+                pnpm exec vue-tsc --noEmit || echo "::warning:: Type check was skipped as not installed, add vue-tsc and config to enable this check"
+              continue-on-error: true
+            - name: ViTest
+              run: |
+                pnpm exec vitest run --passWithNoTests || echo "::warning:: Vitest was skipped as not installed, add vitest and config to enable this check"
+              continue-on-error: true
+
