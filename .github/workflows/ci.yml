@@ -73,13 +73,16 @@ jobs:
               run: pnpm install --frozen-lockfile
               
             - name: run EsLint
-              run: pnpm exec eslint . || echo "::warning:: ESlint was skipped as not installed, add eslint and config to enable this check"
+              run: |
+                pnpm exec eslint . || echo "::warning:: ESlint was skipped as not installed, add eslint and config to enable this check"
               continue-on-error: true
 
             - name: TypeCheck
-              run: pnpm exec vue-tsc --noEmit || echo "::warning:: Type check was skipped as not installed, add vue-tsc and config to enable this check"
+              run: |
+                pnpm exec vue-tsc --noEmit || echo "::warning:: Type check was skipped as not installed, add vue-tsc and config to enable this check"
               continue-on-error: true
             - name: ViTest
-              run: pnpm exec vitest run --passWithNoTests || echo "::warning:: Vitest was skipped as not installed, add vitest and config to enable this check"
+              run: |
+                pnpm exec vitest run --passWithNoTests || echo "::warning:: Vitest was skipped as not installed, add vitest and config to enable this check"
               continue-on-error: true
 
